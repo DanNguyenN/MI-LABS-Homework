@@ -10,9 +10,7 @@
 /[Ll]ogs/
 /[Uu]ser[Ss]ettings/
 /Assets/Oculus
-/Assets/XR
-/Assets/XRI
-/Assets/TutorialInfo
+
 
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
