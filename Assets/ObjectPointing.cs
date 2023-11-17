@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Oculus.Voice.Windows;
 using UnityEngine;
 
 public class ObjectPointing : MonoBehaviour
@@ -7,8 +8,12 @@ public class ObjectPointing : MonoBehaviour
 
     //Get the gameobject with name "Character" and assign it to OVR_Rig
     private GameObject OVR_Rig;
+    private int curr_action = 3;
+    public GameObject thisCube;
+    public Canvas canvas;
 
-    
+    //Array of 4 items
+    private string[] actions = { "Translate", "Rotate", "No Action", "Exit" }; 
 
     // Start is called before the first frame update
     public void turnOutlineOn(bool on)
@@ -17,6 +22,21 @@ public class ObjectPointing : MonoBehaviour
         if (outline != null)
         {
             outline.enabled = on;
+        }
+    }
+
+    public void changeAction(int action)
+    {
+        if (action < 0 || action > 3)
+        {
+            return;
+        }
+        
+        curr_action = action;
+
+        if (action == 3)
+        {
+            canvas.enabled = false;
         }
     }
 
@@ -50,7 +70,7 @@ public class ObjectPointing : MonoBehaviour
             if (curr_object.name == "Cube1")
             {
                 //Make the cube go up in y direction
-                curr_object.transform.Translate(0, 1, 0);
+                curr_object.transform.Translate(0, (float)0.2, 0);
             }
             else if (curr_object.name == "Cube2")
             {
@@ -58,7 +78,7 @@ public class ObjectPointing : MonoBehaviour
                 curr_object.transform.Rotate(30, 0, 0);
             }
         }
-
+        
         // Check if the Y button is pressed
         if (OVRInput.GetDown(OVRInput.Button.Four))
         {
@@ -75,13 +95,33 @@ public class ObjectPointing : MonoBehaviour
         // Check if the A button is pressed
         if (OVRInput.GetDown(OVRInput.Button.One))
         {
-            Debug.Log("A button pressed");
+            if (thisCube == null)
+            {
+                return;
+            }
+
+            if (curr_action == 0)
+            {
+                //Move the cube component of this script up in the y direction
+                thisCube.transform.Translate(0, (float)0.2, 0);
+            }
+            else if (curr_action == 1)
+            {
+                //Rotate the cube component of this script 30 degrees in the x direction
+                thisCube.transform.Rotate(30, 0, 0);
+            }
+            
         }
 
         // Check if the B button is pressed
         if (OVRInput.GetDown(OVRInput.Button.Two))
         {
-            Debug.Log("B button pressed");
+            if (thisCube == null)
+            {
+                return;
+            }
+            //Enable the canvas
+            canvas.enabled = true;
         }
 
 
