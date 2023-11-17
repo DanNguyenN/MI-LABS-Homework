@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Oculus.Interaction.Surfaces;
 using Oculus.Voice.Windows;
 using UnityEngine;
 
@@ -36,7 +37,7 @@ public class ObjectPointing : MonoBehaviour
 
         if (action == 3)
         {
-            canvas.enabled = false;
+            HideCanvas();
         }
     }
 
@@ -121,9 +122,21 @@ public class ObjectPointing : MonoBehaviour
                 return;
             }
             //Enable the canvas
-            canvas.enabled = true;
+            ShowCanvas();
+            
         }
 
+    }
 
+    void HideCanvas()
+    {
+        //Make the y position of the canvas negative so it is hidden
+        canvas.transform.position = new Vector3(canvas.transform.position.x, -canvas.transform.position.y, canvas.transform.position.z);
+    }
+
+    void ShowCanvas()
+    {
+        //Make the y position of the canvas positive so it is visible
+        canvas.transform.position = new Vector3(canvas.transform.position.x, Mathf.Abs(canvas.transform.position.y), canvas.transform.position.z);
     }
 }
